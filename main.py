@@ -47,16 +47,19 @@ global datahoje # Variável global que pode ser utilizada em varias funções as
 datahoje = datetime.now() # Função da biblioteca datetime que pega a data e hora atual
 
 @bot.command()
-async def lembretehoje(ctx, horario: str): 
-    await ctx.send(f"O horário: '{horario}' foi armazenado")
+async def lembretehoje(ctx, horario: str, *, descricao: str): 
+    mensagemBot = await ctx.send(f"O horário: '{horario}' e a descrição '{descricao}' foram armazenados")
+    await mensagemBot.pin()
     global horalembretehoje
+    global descricaohoje
+    descricaohoje = descricao
     datahoje = datetime.now()
     horalembretehoje = datetime.strptime(horario, "%H:%M")
     horalembretehoje = horalembretehoje.replace(day=int(datahoje.day))
     horalembretehoje = horalembretehoje.replace(month=int(datahoje.month))
     horalembretehoje = horalembretehoje.replace(year=int(datahoje.year))
     print("Horário armazenado: "+ str(horalembretehoje))
-    return horalembretehoje
+    return horalembretehoje, descricaohoje
 
 @bot.command()
 async def lembretedia(ctx, horario: str, dia: str): 
