@@ -81,9 +81,10 @@ async def ativarlembrete(ctx, lembrete: str):
             await ctx.send("Impossível guardar lembrete! O horário expirou.")
         else:
             await ctx.send("O lembrete foi ativado!")
+            descricao = descricaohoje
             print(deltatempo.total_seconds())
             await asyncio.sleep(deltatempo.total_seconds())
-            await ctx.send("Lembrete do dia! @everyone")
+            await ctx.send(f"Lembrete do dia: {descricao} @everyone")
     elif lembrete == "dia":
         deltatempo = horalembretedia-datahoje
         if deltatempo.total_seconds() < 0:
