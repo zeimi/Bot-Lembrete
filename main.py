@@ -62,15 +62,17 @@ async def lembretehoje(ctx, horario: str, *, descricao: str):
     return horalembretehoje, descricaohoje
 
 @bot.command()
-async def lembretedia(ctx, horario: str, dia: str): 
-    await ctx.send(f"O horário '{horario}' e o dia '{dia}' foram armazenados")
+async def lembretedia(ctx, horario: str, dia: str, *, descricao: str): 
+    await ctx.send(f"O horário '{horario}', o dia '{dia}' e a descrição '{descricao}' foram armazenados")
     objetivo = horario+" "+dia
     datahoje = datetime.now()
     global horalembretedia
+    global descricaodia
+    descricaodia = descricao
     horalembretedia = datetime.strptime(objetivo, "%H:%M %d/%m")
     horalembretedia = horalembretedia.replace(year=int(datahoje.year))
     print(f"Data armazenada: {str(horalembretedia)}")
-    return horalembretedia
+    return horalembretedia, descricaodia
 
 @bot.command()
 async def ativarlembrete(ctx, lembrete: str):
@@ -91,9 +93,10 @@ async def ativarlembrete(ctx, lembrete: str):
             await ctx.send("Impossível guardar lembrete! O horário expirou.")
         else:
             await ctx.send("O lembrete foi ativado!")
+            descricao1 = descricaodia
             print(deltatempo.total_seconds())
             await asyncio.sleep(deltatempo.total_seconds())
-            await ctx.send("Lembrete programado! @everyone")
+            await ctx.send(f"Lembrete! {descricao1} @everyone")
 
 
 @bot.command() # Comando de teste para ver se o bot pode mandar mensagens no servidor
