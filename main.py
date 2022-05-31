@@ -102,7 +102,6 @@ async def ativarlembrete(ctx, lembrete: str):
 @bot.command() # Comando de teste para ver se o bot pode mandar mensagens no servidor
 async def dataagora(ctx):
     datahoje = datetime.now()
-    await ctx.message.add_reaction("✅")
     await ctx.send(str(datahoje.strftime("**Data atual:** %H:%M.\n**Hora atual:** %d/%m/%Y.")))
     print("Horário atual exibido!")
 
@@ -113,29 +112,11 @@ async def ajuda(ctx):
     embed.add_field(name="**ajuda**", value="Mostra estes comandos", inline=False)
     embed.add_field(name="**teste**", value="Um comando de teste, verifica se o bot está funcional.", inline=False)
     embed.add_field(name="**lembretehoje**", value="Salva o horário como o lembrete de hoje. Uso: **lembretehoje 23:59**", inline=False)
-    embed.add_field(name="**cargos**", value="Escolha um cargo usando reações.", inline=False)
-    embed.add_field(name="**somar**", value="Soma dois números inteiros. Uso correto: **.somar 1 1**", inline=False)
-    embed.add_field(name="**multiplicar**", value="Multiplica dois números inteiros. Uso correto: **.multiplicar 1 1**",
-                    inline=False)
-    embed.add_field(name="**dividir**", value="Divide dois números inteiros. Uso correto: **.dividar 1 1**",
-                    inline=False)
-    embed.add_field(name="**expulsar**", value="Expulsa um usuário do servidor. Uso correto: **.expulsar @usuario**",
-                    inline=False)
-    embed.add_field(name="**banir**", value="Bane um usuário do servidor. Uso correto: **.banir @usuario**",
-                    inline=False)
-    embed.add_field(name="**desbanir**",
-                    value="Tira o banimento de um usuário banido do servidor. Uso correto: **.desbanir usuario#0000**",
-                    inline=False)
-    embed.add_field(name="**admin**",
-                    value="Verifica se o usuário é um administrador do servidor. Uso correto: **.admin @usuario**",
-                    inline=False)
+    embed.add_field(name="**lembretedia**", value="Salva um horário e um dia específico para o lembrete. Uso correto: **.lembretedia 23:59 31/12**", inline=False)
+    embed.add_field(name="**ativarlembrete**", value="Ativa um dos horários salvos e o utiliza como lembrete. Uso correto: **.ativar lembrete hoje/dia**", inline=False)
     embed.add_field(name="**sugestao**", value="E-mail para contato de sugestões para o bot.", inline=False)
-    embed.add_field(name="**fale**",
-                    value="O bot vira seu papagaio pessoal. Uso correto: **.fale** (**o que o bot falará**).",
-                    inline=False)
-    embed.add_field(name="**limpar**",
-                    value="Limpe o chat. Uso correto: **.limpar** (**quantidade**) [sem quantidade informada, serão apagadas 100 mensagens].",
-                    inline=False)
+    embed.add_field(name="**fale**", value="O bot vira seu papagaio pessoal. Uso correto: **.fale** (**o que o bot falará**).", inline=False)
+    embed.add_field(name="**limpar**", value="Limpe o chat. Uso correto: **.limpar** (**quantidade**) [sem quantidade informada, serão apagadas 100 mensagens].", inline=False)
     embed.add_field(name="**Autoria**", value="Bot feito por Bruno Durão Silva e Gustavo Santos Rocha", inline=False)
     await ctx.send(embed=embed)
 
