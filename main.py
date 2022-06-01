@@ -1,6 +1,5 @@
 import discord
-from discord.ext import commands, tasks
-from discord.utils import get
+from discord.ext import commands
 import datetime
 from datetime import *
 import asyncio
@@ -16,13 +15,15 @@ async def on_ready():
                 Bot Online!
        Feito por: Bruno Durão Silva
          e Gustavo Santos Rocha
-        Projeto AV3 de programação:
+  Projeto AV3 de Tec. e Ling. Progamação:
             Bot lembrete discord
-                build v0.1
+                build v1.0
     ----------------------------------
-    versão da API discord.py:""", discord.__version__, """
+     versão da API discord.py:""", discord.__version__, """
     ----------------------------------
-Registro de ações no console:""")
+
+Registro de ações no console:
+""")
 
 
 @bot.event # Eventos de erro (Comando não encontrado, sem requerimentos ou requerimento errado)
@@ -41,25 +42,28 @@ async def on_command_error(ctx, error):
 async def teste(ctx):
     await ctx.message.add_reaction("✅")
     await ctx.send("Teste concluido!")
-    print("Teste concluido!")
+    print("Teste concluido.")
 
 global datahoje # Variável global que pode ser utilizada em varias funções assíncrionas (async def)
 datahoje = datetime.now() # Função da biblioteca datetime que pega a data e hora atual
 
-@bot.command()
+@bot.command() # Indica que a função a seguir é um comando seguindo a API discord.py
 async def lembretehoje(ctx, horario: str, *, descricao: str): 
+
     mensagemBot = await ctx.send(f"O horário: '{horario}' e a descrição '{descricao}' foram armazenados")
-    await mensagemBot.pin()
-    global horalembretehoje
-    global descricaohoje
-    descricaohoje = descricao
-    datahoje = datetime.now()
-    horalembretehoje = datetime.strptime(horario, "%H:%M")
+    await mensagemBot.pin() # Fixa a mensagem no servidor
+
+    global horalembretehoje # Variável global que pode ser acessada em outras funções (def)
+    global descricaohoje    # Idem
+    descricaohoje = descricao # Recebe o parâmetro passado pelo usuário
+    datahoje = datetime.now() # Atualiza o horário e data atuais armazenado no bot
+
+    horalembretehoje = datetime.strptime(horario, "%H:%M") # Coleta a string passada pelo usuário (xx:xx) e transforma em um objeto datetime
     horalembretehoje = horalembretehoje.replace(day=int(datahoje.day))
-    horalembretehoje = horalembretehoje.replace(month=int(datahoje.month))
+    horalembretehoje = horalembretehoje.replace(month=int(datahoje.month))# Troca o dia, mês e ano pelos atuais armazenados no bot
     horalembretehoje = horalembretehoje.replace(year=int(datahoje.year))
-    print("Horário armazenado: "+ str(horalembretehoje))
-    return horalembretehoje, descricaohoje
+    print(f"Horário armazenado por {ctx.author}: "+ str(horalembretehoje))
+    return horalembretehoje, descricaohoje # Atualiza as variáveis globalmente
 
 @bot.command()
 async def lembretedia(ctx, horario: str, dia: str, *, descricao: str): 
@@ -71,12 +75,13 @@ async def lembretedia(ctx, horario: str, dia: str, *, descricao: str):
     descricaodia = descricao
     horalembretedia = datetime.strptime(objetivo, "%H:%M %d/%m")
     horalembretedia = horalembretedia.replace(year=int(datahoje.year))
-    print(f"Data armazenada: {str(horalembretedia)}")
+    print(f"Data armazenada por {ctx.author}: {str(horalembretedia)}")
     return horalembretedia, descricaodia
 
 @bot.command()
 async def ativarlembrete(ctx, lembrete: str):
     datahoje = datetime.now()
+
     if lembrete == "hoje":
         deltatempo = horalembretehoje-datahoje
         if deltatempo.total_seconds() < 0:
@@ -87,6 +92,7 @@ async def ativarlembrete(ctx, lembrete: str):
             print(deltatempo.total_seconds())
             await asyncio.sleep(deltatempo.total_seconds())
             await ctx.send(f"Lembrete do dia: {descricao} @everyone")
+
     elif lembrete == "dia":
         deltatempo = horalembretedia-datahoje
         if deltatempo.total_seconds() < 0:
@@ -94,7 +100,7 @@ async def ativarlembrete(ctx, lembrete: str):
         else:
             await ctx.send("O lembrete foi ativado!")
             descricao1 = descricaodia
-            print(deltatempo.total_seconds())
+            print(f"Segundos até o lembrete programado: {deltatempo.total_seconds()}")
             await asyncio.sleep(deltatempo.total_seconds())
             await ctx.send(f"Lembrete! {descricao1} @everyone")
 
@@ -102,8 +108,8 @@ async def ativarlembrete(ctx, lembrete: str):
 @bot.command() # Comando de teste para ver se o bot pode mandar mensagens no servidor
 async def dataagora(ctx):
     datahoje = datetime.now()
-    await ctx.send(str(datahoje.strftime("**Data atual:** %H:%M.\n**Hora atual:** %d/%m/%Y.")))
-    print("Horário atual exibido!")
+    await ctx.send(str(datahoje.strftime("**Hora atual:** %H:%M.\n**Data atual:** %d/%m/%Y.")))
+    print(f'Horário atual exibido! {datahoje.strftime("Hora atual: %H:%M. Data atual: %d/%m/%Y.")}')
 
 
 @bot.command()
@@ -127,11 +133,17 @@ async def limpar(ctx, quantidade=100):
     await ctx.channel.purge(limit=quantidade + 1)
     print("O chat foi limpo por {}!".format(ctx.author))
 
+@bot.command()
+async def sugestao(ctx):
+    await ctx.send("Sugestões são bem vindas! E-mail para contato: **contato.brunodurao@gmail.com** ou **k13gustavo@gmail.com**")
 
-chave = int(input("""O bot pode iniciar?
+
+chave = int(input(
+"""O bot pode iniciar?
 1 = sim
 0 = não
-resposta: """))
+resposta: """
+))
 if chave == 1:
     print("Bot iniciado")
     bot.run('OTc5ODY0MDI3NzU0Nzk5MTE0.GZGv1B.y8pYxqu_L9wm903qaESlboq-0GtFhDj02j4j1s')
