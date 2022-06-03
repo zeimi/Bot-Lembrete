@@ -144,7 +144,7 @@ async def fale(ctx, *, arg):
     await ctx.send(arg)
     print("O bot falou '{}' no chat!".format(arg))
 
-@bot.command()
+@bot.command() #comando para renomear o bot, funcionou uma vez mas agora não quer funfar por algum motivo
 async def renomear(ctx, name):
     await bot.user.edit(username=name)
 
