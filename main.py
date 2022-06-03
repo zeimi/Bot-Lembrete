@@ -148,7 +148,6 @@ async def fale(ctx, *, arg):
 @bot.command() #comando para renomear o bot, funcionou uma vez mas agora não quer funfar por algum motivo
 async def renomear(ctx, *, name: str):
     await bot.user.edit(username=name)
-    await ctx.send(f'O Nome do bot foi alterado para "{name}" {ctx.author.mention} ')
 
 chave = int(input(
 """O bot pode iniciar?
