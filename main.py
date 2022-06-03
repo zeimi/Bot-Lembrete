@@ -121,7 +121,8 @@ async def ajuda(ctx):
     embed.add_field(name="**lembretedia**", value="Salva um horário e um dia específico para o lembrete. Uso correto: **.lembretedia 23:59 31/12**", inline=False)
     embed.add_field(name="**ativarlembrete**", value="Ativa um dos horários salvos e o utiliza como lembrete. Uso correto: **.ativar lembrete hoje/dia**", inline=False)
     embed.add_field(name="**sugestao**", value="E-mail para contato de sugestões para o bot.", inline=False)
-    embed.add_field(name="**fale**", value="O bot vira seu papagaio pessoal. Uso correto: **.fale** (**o que o bot falará**).", inline=False)
+    embed.add_field(name="**fale**", value="O bot fala o que você quiser. Uso correto: **.fale** (**o que o bot falará**).", inline=False)
+    embed.add_field(name="**renomear**", value="Bota o nome que você quiser no bot. Uso correto: **.renomear** (**novo nome do bot**).", inline=False)
     embed.add_field(name="**limpar**", value="Limpe o chat. Uso correto: **.limpar** (**quantidade**) [sem quantidade informada, serão apagadas 100 mensagens].", inline=False)
     embed.add_field(name="**Autoria**", value="Bot feito por Bruno Durão Silva e Gustavo Santos Rocha", inline=False)
     await ctx.send(embed=embed)
@@ -137,6 +138,15 @@ async def limpar(ctx, quantidade=100):
 async def sugestao(ctx):
     await ctx.send("Sugestões são bem vindas! E-mail para contato: **contato.brunodurao@gmail.com** ou **k13gustavo@gmail.com**")
 
+@bot.command()
+async def fale(ctx, *, arg):
+    await ctx.channel.purge(limit=1)
+    await ctx.send(arg)
+    print("O bot falou '{}' no chat!".format(arg))
+
+@bot.command()
+async def renomear(ctx, name):
+    await bot.user.edit(username=name)
 
 chave = int(input(
 """O bot pode iniciar?
