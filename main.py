@@ -3,6 +3,7 @@ from discord.ext import commands
 import datetime
 from datetime import *
 import asyncio
+from chaveBOT import chaveBOT
 
 bot = commands.Bot(description='Um bot feito para um trabalho universitário', command_prefix='.')
 
@@ -145,8 +146,9 @@ async def fale(ctx, *, arg):
     print("O bot falou '{}' no chat!".format(arg))
 
 @bot.command() #comando para renomear o bot, funcionou uma vez mas agora não quer funfar por algum motivo
-async def renomear(ctx, name):
+async def renomear(ctx, *, name: str):
     await bot.user.edit(username=name)
+    await ctx.send(f'O Nome do bot foi alterado para "{name}" {ctx.author.mention} ')
 
 chave = int(input(
 """O bot pode iniciar?
@@ -156,4 +158,4 @@ resposta: """
 ))
 if chave == 1:
     print("Bot iniciado")
-    bot.run('OTc5ODY0MDI3NzU0Nzk5MTE0.GZGv1B.y8pYxqu_L9wm903qaESlboq-0GtFhDj02j4j1s')
+    bot.run(chaveBOT)
