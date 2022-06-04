@@ -55,7 +55,9 @@ global datahoje
 datahoje = datetime.now()  # Função da biblioteca datetime que pega a data e hora atual
 
 
-@bot.command()  # Indica que a função a seguir é um comando seguindo a API discord.py
+# "@bot.command()" Indica que a função a seguir é um comando seguindo a API discord.py
+
+@bot.command()  # Comando para salvar um lembrete para hoje
 async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
 
     if verificacao(hora=horario) == True:
@@ -86,7 +88,7 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
         await ctx.send(f"O horário: '{horario}' é inválido!")
 
 
-@bot.command()
+@bot.command() # Comando para salvar um lembrete com data
 async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
 
     if verificacao(data=dia) == True:
@@ -110,7 +112,7 @@ async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
         await ctx.send(f"O horário '{horario}' e/ou o dia '{dia}' são inválidos!")
 
 
-@bot.command()
+@bot.command() # Comando para confirmar o lembrete salvo
 async def confirmarlembrete(ctx, lembrete: str):
     datahoje = datetime.now()
 
@@ -150,7 +152,7 @@ async def dataagora(ctx):
         f'Horário atual exibido! {datahoje.strftime("Hora atual: %H:%M. Data atual: %d/%m/%Y.")}')
 
 
-@bot.command()
+@bot.command() # Comando de ajuda, mostra todos os outros comandos
 async def ajuda(ctx):
     embed = discord.Embed(
         title="Aqui estão todos os comandos do bot atualmente:", color=0x000080)
@@ -177,25 +179,25 @@ async def ajuda(ctx):
     await ctx.send(embed=embed)
 
 
-@bot.command()
+@bot.command() # Comando para limpar o chat
 async def limpar(ctx, quantidade=100):
     await ctx.channel.purge(limit=quantidade + 1)
     print("O chat foi limpo por {}!".format(ctx.author))
 
 
-@bot.command()
+@bot.command() # Comando para contatar os desenvolvedores
 async def sugestao(ctx):
     await ctx.send("Sugestões são bem vindas! E-mail para contato: **contato.brunodurao@gmail.com** ou **k13gustavo@gmail.com**")
 
 
-@bot.command()
+@bot.command() # Comando para excluir mensagens no chat
 async def fale(ctx, *, arg):
     await ctx.channel.purge(limit=1)
     await ctx.send(arg)
     print("O bot falou '{}' no chat!".format(arg))
 
 
-@bot.command() 
+@bot.command() # Comando para trocar o nome do Bot
 async def renomear(ctx, *, name: str):
     await bot.user.edit(username=name)
 
