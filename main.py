@@ -87,21 +87,31 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
 
 
 @bot.command()
-async def lembretedia(ctx, horario: str, dia: str, *, descricao: str):
-    await ctx.send(f"O horário '{horario}', o dia '{dia}' e a descrição '{descricao}' foram armazenados")
-    objetivo = horario+" "+dia
-    datahoje = datetime.now()
-    global horalembretedia
-    global descricaodia
-    descricaodia = descricao
-    horalembretedia = datetime.strptime(objetivo, "%H:%M %d/%m")
-    horalembretedia = horalembretedia.replace(year=int(datahoje.year))
-    print(f"Data armazenada por {ctx.author}: {str(horalembretedia)}")
-    return horalembretedia, descricaodia
+async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
+
+    if verificacao(data=dia) == True:
+        if descricao == "":
+            mensagemBot = await ctx.send(f"O horário '{horario}' e o dia '{dia}' foram armazenados")
+
+        else:
+            await ctx.send(f"O horário '{horario}', o dia '{dia}' e a descrição '{descricao}' foram armazenados")
+
+        objetivo = horario+" "+dia
+        datahoje = datetime.now()
+        global horalembretedia
+        global descricaodia
+        descricaodia = descricao
+        horalembretedia = datetime.strptime(objetivo, "%H:%M %d/%m")
+        horalembretedia = horalembretedia.replace(year=int(datahoje.year))
+        print(f"Data armazenada por {ctx.author}: {str(horalembretedia)}")
+        return horalembretedia, descricaodia
+
+    else:
+        await ctx.send(f"O horário '{horario}' e/ou o dia '{dia}' são inválidos!")
 
 
 @bot.command()
-async def ativarlembrete(ctx, lembrete: str):
+async def confirmarlembrete(ctx, lembrete: str):
     datahoje = datetime.now()
 
     if lembrete == "hoje":
@@ -149,11 +159,11 @@ async def ajuda(ctx):
     embed.add_field(
         name="**teste**", value="Um comando de teste, verifica se o bot está funcional.", inline=False)
     embed.add_field(name="**lembretehoje**",
-                    value="Salva o horário como o lembrete de hoje. Uso: **lembretehoje 23:59**", inline=False)
+                    value="Salva o horário como o lembrete de hoje. Uso: **lembretehoje 23:59 (descrição opcional)**", inline=False)
     embed.add_field(name="**lembretedia**",
-                    value="Salva um horário e um dia específico para o lembrete. Uso correto: **.lembretedia 23:59 31/12**", inline=False)
-    embed.add_field(name="**ativarlembrete**",
-                    value="Ativa um dos horários salvos e o utiliza como lembrete. Uso correto: **.ativar lembrete hoje/dia**", inline=False)
+                    value="Salva um horário e um dia específico para o lembrete. Uso correto: **.lembretedia 23:59 31/12 (descrição opcional)**", inline=False)
+    embed.add_field(name="**confirmarlembrete**",
+                    value="Confirma um dos horários salvos e o utiliza como lembrete. Uso correto: **.ativar lembrete hoje/dia**", inline=False)
     embed.add_field(name="**sugestao**",
                     value="E-mail para contato de sugestões para o bot.", inline=False)
     embed.add_field(
@@ -185,7 +195,7 @@ async def fale(ctx, *, arg):
     print("O bot falou '{}' no chat!".format(arg))
 
 
-@bot.command()  # comando para renomear o bot, funcionou uma vez mas agora não quer funfar por algum motivo
+@bot.command() 
 async def renomear(ctx, *, name: str):
     await bot.user.edit(username=name)
 

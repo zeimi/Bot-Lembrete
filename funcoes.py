@@ -3,7 +3,7 @@ from datetime import *
 from calendar import isleap
 
 horaEscolhida = "23:59"
-dataEscolhida = "04/06"
+dataEscolhida = "04/10"
 datahoje = datetime.now()
 
 
@@ -27,8 +27,8 @@ def verificacao(hora:str, data:str=""):
     if data == "":
         datavalida = True
     else:
-        if int(verificaData[1]) == 2:
-            if isleap(anoEscolhido):
+        if int(verificaData[1]) == 2: # Verifica se o mês é fevereiro
+            if isleap(anoEscolhido): # Verifica se é ano bissexto
                 if int(verificaData[0]) <= 29:
                     datavalida = True
 
@@ -41,26 +41,22 @@ def verificacao(hora:str, data:str=""):
                     datavalida = False
 
         else:
-            for i in listaMes31:
+            for i in listaMes31: # Verifica se é um mês terminado em dia 31
                 if int(verificaData[1]) == i and int(verificaData[0]) <= 31:
                     datavalida = True
                     break
                 else:
                     datavalida = False
 
-            for i in listaMes30:
-                if int(verificaData[1]) == i and int(verificaData[0]) <= 30:
-                    datavalida = True
-                    break
-                else:
-                    datavalida = False
+            if datavalida == False:
+                for i in listaMes30: # Verifica se é um mês terminado em dia 30
+                    if int(verificaData[1]) == i and int(verificaData[0]) <= 30:
+                        datavalida = True
+                        break
+                    else:
+                        datavalida = False
 
     if horavalida == True and datavalida == True:
         return True
     else:
         return False
-
-if verificacao(hora=horaEscolhida, data=dataEscolhida) == True:
-    print("É verdade")
-elif verificacao(hora=horaEscolhida, data=dataEscolhida) == False:
-    print("Né nada")

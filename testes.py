@@ -2,56 +2,40 @@ import datetime
 from datetime import *
 from calendar import isleap
 
+
+quebraloop = 1
 horaEscolhida = "23:59"
-dataEscolhida = "04/06"
+dataEscolhida = "04/09"
 datahoje = datetime.now()
 
 
-# Início da função
-def verificacao(hora:str, data:str=""):
+verificaHora = horaEscolhida.split(sep=":")
+verificaData = dataEscolhida.split(sep="/")
+anoEscolhido = datahoje.year
 
-    verificaHora = hora.split(sep=":")
-    verificaData = data.split(sep="/")
-    anoEscolhido = datahoje.year
+listaMes31 = [1, 3, 5, 7, 8, 10, 12]
+listaMes30 = [4, 6, 9, 11]
 
-    # Verificação horário válido
-    if int(verificaHora[0]) > 23 or int(verificaHora[1]) > 59:
-        print("Tá errado fi")
+while quebraloop == 1:
+
+    if quebraloop == 0:
+        break
     else:
-        print("Pode pá")
-
-    # Verificação Data Válida
-    listaMes31 = [1, 3, 5, 7, 8, 10, 12]
-    listaMes30 = [4, 6, 9, 11]
-
-    if data == "":
-        None
-    else:
-        if int(verificaData[1]) == 2:
-            if isleap(anoEscolhido):
-                if int(verificaData[0]) <= 29:
-                    print("Pode pá")
-                else:
-                    print("Tá errado fi")
+        for i in listaMes31:
+            if int(verificaData[1]) == i and int(verificaData[0]) <= 31:
+                print ('True')
+                quebraloop == 0
+                break
             else:
-                if int(verificaData[0]) <= 28:
-                    print("Pode pá")
-                else:
-                    print("Tá errado fi")
+                None
 
-        else:
-            for i in listaMes31:
-                if int(verificaData[1]) == i and int(verificaData[0]) <= 31:
-                    print("Pode pá")
-                else:
-                    None
-
-            for i in listaMes30:
-                if int(verificaData[1]) == i and int(verificaData[0]) <= 30:
-                    print("Pode pá")
-                else:
-                    None
-
-    return None
-
-verificacao(hora=horaEscolhida, data=dataEscolhida)
+    if quebraloop == 0:
+        break
+    else:
+        for i in listaMes30:
+            if int(verificaData[1]) == i and int(verificaData[0]) <= 30:
+                print ('True')
+                quebraloop == 0
+                break
+            else:
+                None
