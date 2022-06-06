@@ -2,8 +2,8 @@ import datetime
 from datetime import *
 from calendar import isleap
 
-horaEscolhida = "19:19"
-dataEscolhida = "af/nn"
+horaEscolhida = "10:19"
+dataEscolhida = "-1234/07"
 datahoje = datetime.now()
 
 
@@ -18,12 +18,12 @@ def verificacao(hora: str, data: str = ""):
 
     # Verificação horário válido
     try:
-        test1 = int(verificaHora[0])
+        test1 = int(verificaHora[0]) # Verifica se o horário é numérico
         test2 = int(verificaHora[1])
 
         horavalida = True
 
-    except ValueError:
+    except ValueError: # Se não for numérico, retorna False
         horavalida = False
 
     if horavalida == False:
@@ -48,8 +48,8 @@ def verificacao(hora: str, data: str = ""):
 
     else:
         try:
-            test1 = int(verificaData[0])
-            test2 = int(verificaData[1])
+            test1 = int(verificaData[0]) # Verifica se o dia é numérico
+            test2 = int(verificaData[1]) 
 
             datavalida = True
 
@@ -89,6 +89,9 @@ def verificacao(hora: str, data: str = ""):
                             break
                         else:
                             datavalida = False
+            if datavalida == True:
+                if int(verificaData[0]) < 0 or int(verificaData[1]) < 0: # Verifica se o dia ou mês é negativo
+                    datavalida = False
 
     if horavalida == True and datavalida == True:  # Se a hora e data forem válidas, retorna True
         return True
