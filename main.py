@@ -50,7 +50,6 @@ async def teste(ctx):
     await ctx.send("Teste concluido!")
     print("Teste concluido.")
 
-# Variável global que pode ser utilizada em varias funções assíncrionas (async def)
 global datahoje
 datahoje = datetime.now()  # Função da biblioteca datetime que pega a data e hora atual
 
@@ -69,9 +68,10 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
 
         await mensagemBot.pin()  # Fixa a mensagem no servidor
 
-        # Variável global que pode ser acessada em outras funções (def)
+        # Variáveis globais que podem ser acessadas em outras funções (def)
         global horalembretehoje
-        global descricaohoje    # Idem
+        global descricaohoje
+
         descricaohoje = descricao  # Recebe o parâmetro passado pelo usuário
         datahoje = datetime.now()  # Atualiza o horário e data atuais armazenado no bot
 
@@ -91,20 +91,25 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
 @bot.command() # Comando para salvar um lembrete com data
 async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
 
-    if verificacao(data=dia) == True:
+    if verificacao(hora=horario, data=dia) == True:
         if descricao == "":
             mensagemBot = await ctx.send(f"O horário '{horario}' e o dia '{dia}' foram armazenados")
 
         else:
             await ctx.send(f"O horário '{horario}', o dia '{dia}' e a descrição '{descricao}' foram armazenados")
+        
+        await mensagemBot.pin()  # Fixa a mensagem no servidor
 
         objetivo = horario+" "+dia
         datahoje = datetime.now()
+
         global horalembretedia
         global descricaodia
+
         descricaodia = descricao
         horalembretedia = datetime.strptime(objetivo, "%H:%M %d/%m")
         horalembretedia = horalembretedia.replace(year=int(datahoje.year))
+
         print(f"Data armazenada por {ctx.author}: {str(horalembretedia)}")
         return horalembretedia, descricaodia
 
