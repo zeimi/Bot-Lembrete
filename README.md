@@ -4,6 +4,7 @@
                  LEMBROT
        Feito por: Bruno Durão Silva
          e Gustavo Santos Rocha
+         
   Projeto AV3 de Tec. e Ling. Progamação:
         Bot de lembretes para discord
                 build v1.0
