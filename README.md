@@ -4,6 +4,7 @@
                  LEMBROT
        Feito por: Bruno Durão Silva
          e Gustavo Santos Rocha
+         Um bot que vai te lembrar de algo importante (ou simples) no horário e data que você determinar, sem enrolação.
          
   Projeto AV3 de Tec. e Ling. Progamação:
         Bot de lembretes para discord
