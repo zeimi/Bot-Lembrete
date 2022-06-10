@@ -1,18 +1,20 @@
 import datetime
 from datetime import *
 from calendar import isleap
+import pytz
+from pytz import *
 
 horaEscolhida = "10:19"
 dataEscolhida = "-1234/07"
-datahoje = datetime.now()
+datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))
 
 
 # Início da função verificação de horário e data
 def verificacao(hora: str, data: str = ""):
-    #                                                    # 0     1
-    # Separa a hora em um array, separado por : Exemplo: ['23', '59']
+    #                                                     # 0     1
+    # Separa a hora em uma lista, separado por : Exemplo: ['23', '59']
     verificaHora = hora.split(sep=":")
-    # Separa a data em um array, separado por / Exemplo: ['04', '09']
+    # Separa a data em uma lista, separado por / Exemplo: ['04', '09']
     verificaData = data.split(sep="/")
     anoEscolhido = datahoje.year  # Ano atual
 
@@ -99,3 +101,4 @@ def verificacao(hora: str, data: str = ""):
         return False
 
 print(verificacao(horaEscolhida, dataEscolhida))
+print(datahoje)

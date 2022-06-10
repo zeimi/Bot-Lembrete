@@ -3,6 +3,8 @@ from discord.ext import commands
 import datetime
 from datetime import *
 import asyncio
+import pytz
+from pytz import *
 from chaveBOT import chaveBOT
 from funcoes import verificacao
 
@@ -51,7 +53,7 @@ async def teste(ctx):
     print("Teste concluido.")
 
 global datahoje
-datahoje = datetime.now()  # Função da biblioteca datetime que pega a data e hora atual
+datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))  # Função da biblioteca datetime que pega a data e hora atual
 
 
 # "@bot.command()" Indica que a função a seguir é um comando seguindo a API discord.py
@@ -73,7 +75,7 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
         global descricaohoje
 
         descricaohoje = descricao  # Recebe o parâmetro passado pelo usuário
-        datahoje = datetime.now()  # Atualiza o horário e data atuais armazenado no bot
+        datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))  # Atualiza o horário e data atuais armazenado no bot
 
         # Coleta a string passada pelo usuário (xx:xx) e transforma em um objeto datetime
         horalembretehoje = datetime.strptime(horario, "%H:%M")
@@ -81,6 +83,7 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
         # Troca o dia, mês e ano pelos atuais armazenados no bot
         horalembretehoje = horalembretehoje.replace(month=int(datahoje.month))
         horalembretehoje = horalembretehoje.replace(year=int(datahoje.year))
+
         print(f"Horário armazenado por {ctx.author}: " + str(horalembretehoje))
         return horalembretehoje, descricaohoje  # Atualiza as variáveis globalmente
 
@@ -101,7 +104,7 @@ async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
         await mensagemBot.pin()  # Fixa a mensagem no servidor
 
         objetivo = horario+" "+dia
-        datahoje = datetime.now()
+        datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))
 
         global horalembretedia
         global descricaodia
@@ -119,7 +122,7 @@ async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
 
 @bot.command() # Comando para confirmar o lembrete salvo
 async def confirmarlembrete(ctx, lembrete: str):
-    datahoje = datetime.now()
+    datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))
 
     if lembrete == "hoje":
         deltatempo = horalembretehoje-datahoje
@@ -151,7 +154,7 @@ async def confirmarlembrete(ctx, lembrete: str):
 
 @bot.command()  # Comando de teste para ver se o bot pode mandar mensagens no servidor
 async def dataagora(ctx):
-    datahoje = datetime.now()
+    datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))
     await ctx.send(str(datahoje.strftime("**Hora atual:** %H:%M.\n**Data atual:** %d/%m/%Y.")))
     print(
         f'Horário atual exibido! {datahoje.strftime("Hora atual: %H:%M. Data atual: %d/%m/%Y.")}')
@@ -170,7 +173,7 @@ async def ajuda(ctx):
     embed.add_field(name="**lembretedia**",
                     value="Salva um horário e um dia específico para o lembrete. Uso correto: **.lembretedia 23:59 31/12 (descrição opcional)**", inline=False)
     embed.add_field(name="**confirmarlembrete**",
-                    value="Confirma um dos horários salvos e o utiliza como lembrete. Uso correto: **.ativar lembrete hoje/dia**", inline=False)
+                    value="Confirma um dos horários salvos e o utiliza como lembrete. Uso correto: **.confirmarlembrete hoje/dia**", inline=False)
     embed.add_field(name="**sugestao**",
                     value="E-mail para contato de sugestões para o bot.", inline=False)
     embed.add_field(
@@ -206,12 +209,6 @@ async def fale(ctx, *, arg):
 async def renomear(ctx, *, name: str):
     await bot.user.edit(username=name)
 
-chave = int(input(
-    """O bot pode iniciar?
-1 = sim
-0 = não
-resposta: """
-))
-if chave == 1:
-    print("Bot iniciado")
-    bot.run(chaveBOT)
+
+print("Bot iniciado")
+bot.run(chaveBOT)
