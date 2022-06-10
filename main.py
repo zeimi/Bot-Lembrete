@@ -80,9 +80,9 @@ async def lembretehoje(ctx, horario: str, *, descricao: str = ""):
         # Coleta a string passada pelo usuário (xx:xx) e transforma em um objeto datetime
         horalembretehoje = datetime.strptime(horario, "%H:%M")
         horalembretehoje = horalembretehoje.replace(day=int(datahoje.day))
-        # Troca o dia, mês e ano pelos atuais armazenados no bot
         horalembretehoje = horalembretehoje.replace(month=int(datahoje.month))
         horalembretehoje = horalembretehoje.replace(year=int(datahoje.year))
+        horalembretehoje = horalembretehoje.replace(tzinfo=datahoje.tzinfo)
 
         print(f"Horário armazenado por {ctx.author}: " + str(horalembretehoje))
         return horalembretehoje, descricaohoje  # Atualiza as variáveis globalmente
@@ -112,6 +112,7 @@ async def lembretedia(ctx, horario: str, dia: str, *, descricao: str = ""):
         descricaodia = descricao
         horalembretedia = datetime.strptime(objetivo, "%H:%M %d/%m")
         horalembretedia = horalembretedia.replace(year=int(datahoje.year))
+        horalembretedia = horalembretedia.replace(tzinfo=datahoje.tzinfo)
 
         print(f"Data armazenada por {ctx.author}: {str(horalembretedia)}")
         return horalembretedia, descricaodia
