@@ -16,10 +16,10 @@ horalembretehoje = horalembretehoje.replace(day=int(datahoje.day))
 horalembretehoje = horalembretehoje.replace(month=int(datahoje.month))
 horalembretehoje = horalembretehoje.replace(year=int(datahoje.year))
 
-print(datahoje.tzname())
-print(horalembretehoje.tzname())
-print(horalembretehoje)
-print(datahoje)
+print(datahoje.tzname()) # Imprime o nome do fuso horário da variável datahoje
+print(horalembretehoje.tzname()) # Imprime o nome do fuso horário da variável horalembretehoje
+print(horalembretehoje) # Imprime a data e hora da variável horalembretehoje
+print(datahoje) # Imprime a data e hora da variável datahoje
 
 deltatempo = horalembretehoje - datahoje
 print(deltatempo.total_seconds())

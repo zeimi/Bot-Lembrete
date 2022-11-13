@@ -4,10 +4,8 @@ from calendar import isleap
 import pytz
 from pytz import *
 
-horaEscolhida = "10:19"
-dataEscolhida = "-1234/07"
+global datahoje
 datahoje = datetime.now(tz=pytz.timezone('America/Bahia'))
-
 
 # Início da função verificação de horário e data
 def verificacao(hora: str, data: str = ""):
@@ -100,5 +98,33 @@ def verificacao(hora: str, data: str = ""):
     else:
         return False
 
-print(verificacao(horaEscolhida, dataEscolhida))
-print(datahoje)
+
+global listaLembrete
+listaLembrete = []
+
+def lembreteusuario(usuario, horario, descricao):
+
+    stringLembrete = f"{usuario},{horario},{descricao}"
+    global substituiu
+    substituiu = False
+
+    for i in range(len(listaLembrete)):
+        if str(usuario) in listaLembrete[i]:
+            listaLembrete[i] = stringLembrete
+            substituiu = True
+    if substituiu == True:
+        return listaLembrete
+    else:
+        listaLembrete.append(stringLembrete)
+        return listaLembrete
+
+def buscalembrete(usuario):
+    enviado = False
+    for i in listaLembrete:
+        if str(usuario) in i:
+            enviado = True
+            return i
+        else:
+            continue
+    if enviado == False:
+        return False
